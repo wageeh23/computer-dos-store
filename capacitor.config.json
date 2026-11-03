@@ -1,0 +1,9 @@
+{
+  "appId": "com.computerdos.store",
+  "appName": "Computer DOS Store",
+  "webDir": "client/dist",
+  "backgroundColor": "#07071a",
+  "android": {
+    "allowMixedContent": true
+  }
+}

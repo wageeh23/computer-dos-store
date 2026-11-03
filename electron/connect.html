@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>الاتصال بالسيرفر</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+           background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #0f172a; }
+    .card { background: #fff; border-radius: 16px; padding: 32px; width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    p.sub { color: #64748b; font-size: 13px; margin: 0 0 20px; }
+    label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px; }
+    input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; direction: ltr; text-align: left; }
+    input:focus { outline: 2px solid #3b82f6; border-color: #3b82f6; }
+    button { width: 100%; margin-top: 16px; padding: 11px; border: 0; border-radius: 8px; background: #2563eb;
+             color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    button:disabled { opacity: .6; cursor: wait; }
+    .err { display: none; margin-top: 12px; background: #fef2f2; color: #dc2626; font-size: 13px; padding: 10px; border-radius: 8px; }
+    .hint { margin-top: 16px; font-size: 12px; color: #64748b; line-height: 1.7; }
+    code { background: #f1f5f9; padding: 1px 6px; border-radius: 4px; direction: ltr; display: inline-block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>الاتصال بسيرفر المحل</h1>
+    <p class="sub">أدخل عنوان السيرفر الذي يشغّل قاعدة البيانات</p>
+    <label>عنوان السيرفر</label>
+    <input id="url" placeholder="http://192.168.1.10:3000" />
+    <button id="btn">اتصال</button>
+    <div id="err" class="err"></div>
+    <div class="hint">
+      <b>لتشغيل السيرفر على هذا الجهاز أو جهاز رئيسي بالمحل:</b><br>
+      1. افتح مجلد البرنامج وشغّل <code>npm start</code><br>
+      2. سيظهر لك العنوان مثل <code>http://192.168.1.10:3000</code><br>
+      3. إن كان السيرفر على نفس الجهاز استخدم <code>http://localhost:3000</code>
+    </div>
+  </div>
+  <script>
+    const input = document.getElementById('url');
+    const btn = document.getElementById('btn');
+    const err = document.getElementById('err');
+    window.desktop.getConfig().then(c => { if (c.serverUrl) input.value = c.serverUrl; else input.value = 'http://localhost:3000'; });
+    btn.onclick = async () => {
+      err.style.display = 'none';
+      btn.disabled = true; btn.textContent = 'جارٍ الاتصال...';
+      const res = await window.desktop.connect(input.value);
+      if (!res.ok) {
+        err.textContent = res.error;
+        err.style.display = 'block';
+        btn.disabled = false; btn.textContent = 'اتصال';
+      }
+    };
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') btn.click(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+release/
+data/
+*.db
+*.log
+smoke-out/
+smoke.log
+server.log
+android/app/build/
