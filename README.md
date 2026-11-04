@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Computer DOS Store — متجر وتجميعات PC
 
 نظام متكامل لمحل قطع كمبيوتر وإكسسوارات، بقسمين:
@@ -79,6 +78,3 @@ npm run dev   # سيرفر (3000) + Vite dev (5173)
 - اسم المحل/العملة/الهاتف: `client/src/config.js`
 - فئات وخانات المُجمّع والتوافق: `client/src/lib/catalog.js`
 - ثم `npm run build` و`npm run dist` لإعادة الإنتاج.
-=======
-# computer-dos-store
->>>>>>> origin/main
